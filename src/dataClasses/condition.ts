@@ -62,10 +62,24 @@ export class Condition
         }
 
         if(con.targetHTMLSize)
-            result += target.contentHTMLSize;
+        {
+            if(target.contentHTMLSize)   
+                result += target.contentHTMLSize;
+            else if(con.zeroToUndefined)
+                result += '?';
+            else
+                result += 0;
+        }
         
         if(con.targetPlainSize)
-            result += target.contentPlainSize;
+        {
+            if(target.contentPlainSize)   
+                result += target.contentPlainSize;
+            else if(con.zeroToUndefined)
+                result += '?';
+            else
+                result += 0;
+        }
 
         // Formatting result
         try{
