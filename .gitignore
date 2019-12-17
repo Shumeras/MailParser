@@ -2,6 +2,9 @@
 
 /secrets
 
+# hidding environment settings
+/src/environments
+
 # compiled output
 /dist
 /tmp
