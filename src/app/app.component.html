@@ -1,0 +1,15 @@
+<mat-horizontal-stepper>
+  <mat-step>
+    <ng-template matStepLabel>Setup conditions</ng-template>
+    <app-conditions class="fillPage"></app-conditions>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Import emails</ng-template>
+    <app-email class="fillPage"></app-email>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Parse data</ng-template>
+    <app-export class="fillPage"></app-export>
+  </mat-step>
+  
+</mat-horizontal-stepper>

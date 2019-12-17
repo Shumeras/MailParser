@@ -1,0 +1,52 @@
+.alignCenter{
+    margin: auto 25% ;
+    width: 50%;
+    align-self: center;
+}
+
+.mat-card{
+    margin: 10px;
+    padding: 10px 10px 5px 5px ;
+    background-color: #5F5F5F;
+    display: grid;
+    grid-template-columns: 90% 10%;
+    grid-template-rows: max-content;
+
+    .mat-card-actions{
+        padding: 0;
+        button{
+            height: 90%;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }      
+    }
+}
+
+.listFooter{
+    grid-template-columns: 50% 50%;
+}
+
+.details{
+    padding: 10px;
+    margin: 10px;
+    
+    *{
+        color: mintcream;
+    }
+
+    h4{
+        margin: 10px 5px 5px 2px;
+    }
+
+    .mat-checkbox{
+        margin: 2px 10px 2px 2px;
+    }
+}
+
+.detailsList{
+    margin: 10px;
+    padding: 10px 10px 5px 5px ;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: max-content;
+}

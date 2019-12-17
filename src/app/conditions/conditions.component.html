@@ -1,0 +1,83 @@
+<section *ngIf="startupPage" class="gridContainer">
+    <div class="leftSide" >
+        <h2>Load From File</h2>
+        <button mat-raised-button class="alignCenter" color="warn" (click)="fileInput.click()">
+            <span>Load File</span>
+            <input #fileInput type="file" (change)="startup($event.target.files)" accept=".json" style="display:none;" />
+        </button>
+    </div>
+    <div class="rightSide">
+        <h2>Start From Scratch</h2>
+        <button class="alignCenter" mat-raised-button (click)="startup()" color="primary">Start</button>
+    </div>
+</section>
+
+<section *ngIf="!startupPage" class="gridContainer">
+    <div class="leftSide listContainer">
+        <cdk-virtual-scroll-viewport itemSize="90" class="scrollContainer">
+            <mat-card *cdkVirtualFor="let condition of conditions" (click)="selectedCondition = condition" [style.background] = "(condition == selectedCondition)? '#6f6062' : '' ">
+                <mat-card-header>
+                    <mat-card-title>{{condition.name}}</mat-card-title>
+                    <mat-card-subtitle>{{condition.expression}}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-actions>
+                    <button mat-button color="warn" (click)="deleteSelectedCondition(condition)">X</button>
+                </mat-card-actions>
+            </mat-card>
+        </cdk-virtual-scroll-viewport>
+        <div class="listFooter">
+            <button mat-raised-button color="warn" (click)="startupPage = true; selectedCondition = null;">Import</button>
+            <button mat-raised-button color="primary" (click)="exportConditions()">Export</button>
+            <button mat-raised-button color="accent" (click)="createNewCondition()">+ New</button>
+        </div>
+    </div>
+    <div class="rightSide details" *ngIf = "selectedCondition != null">
+        <mat-form-field class="fillLine">
+            <input matInput placeholder="Name" [(ngModel)]="selectedCondition.name">
+        </mat-form-field>
+        <mat-checkbox class="fillLine" [(ngModel)]="selectedCondition.isManual">Manual Property</mat-checkbox>
+        <div *ngIf="selectedCondition.isManual">
+            <mat-form-field class="fillLine">
+                <input matInput placeholder="Default Value" 
+                    [(ngModel)]="selectedCondition.expression" 
+                    (blur)="updateCurrentConditionExpression()"
+                    (keyup.enter)="updateCurrentConditionExpression()">
+            </mat-form-field>
+        </div>
+        <div *ngIf="!selectedCondition.isManual">
+            <mat-form-field class="fillLine">
+                <input matInput placeholder="Expression" 
+                    [(ngModel)]="selectedCondition.expression" 
+                    (blur)="updateCurrentConditionExpression()"
+                    (keyup.enter)="updateCurrentConditionExpression()">
+            </mat-form-field>
+            <h4>Target data:</h4>
+            <mat-checkbox [(ngModel)]="selectedCondition.targetAttachments">Attachments</mat-checkbox>
+            <mat-checkbox [(ngModel)]="selectedCondition.targetAttachmentSize">Attachment Size</mat-checkbox>
+            <mat-checkbox [(ngModel)]="selectedCondition.targetAttachmentCount">Attachment Count</mat-checkbox>
+            <mat-checkbox [(ngModel)]="selectedCondition.targetHTMLBody">HTML Body</mat-checkbox>
+            <mat-checkbox [(ngModel)]="selectedCondition.targetHTMLSize">HTML Size</mat-checkbox>
+            <mat-checkbox [(ngModel)]="selectedCondition.targetPlainBody">Plain Body</mat-checkbox>
+            <mat-checkbox [(ngModel)]="selectedCondition.targetPlainSize">Plain Size</mat-checkbox>
+            <mat-checkbox [(ngModel)]="selectedCondition.targetSubject">Subject</mat-checkbox>
+            <mat-checkbox [(ngModel)]="selectedCondition.targetSender">Sender</mat-checkbox>
+            <mat-checkbox [(ngModel)]="selectedCondition.targetLabels">Labels</mat-checkbox>
+        </div>
+        <div>
+            <h4>Format:</h4>
+            <mat-checkbox [(ngModel)]="selectedCondition.isNominal">Nominal Value</mat-checkbox>
+            <mat-checkbox [(ngModel)]="selectedCondition.isMath">Math Value</mat-checkbox>
+            <mat-checkbox [(ngModel)]="selectedCondition.isBool">Bool Value</mat-checkbox>
+            <br>
+            <mat-checkbox [(ngModel)]="selectedCondition.zeroToUndefined">Turn zero to undefined</mat-checkbox>
+            
+        </div>
+    </div>
+</section>
+
+<section *ngIf="pageIsLoading" class="loadingElement" >
+    <div class="loadingContent">
+        <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+        <h2>Loading...</h2>
+    </div>
+</section>

@@ -1,0 +1,71 @@
+<section *ngIf="startupPage" class="gridContainer">
+    <div class="leftSide" >
+        <h2>Load From File</h2>
+        <button mat-raised-button class="alignCenter" color="warn" (click)="fileInput.click()">
+            <span>Load File</span>
+            <input #fileInput type="file" (change)="startup($event.target.files)" accept=".json" style="display:none;" />
+        </button>
+    </div>
+    <div class="rightSide">
+        <h2>Load From Gmail API</h2>
+        <button class="alignCenter" mat-raised-button (click)="startup()" color="primary">Gmail</button>
+    </div>
+</section>
+
+<section *ngIf="!startupPage" class="gridContainer">
+    <div class="leftSide listContainer">
+        <cdk-virtual-scroll-viewport itemSize="90" class="scrollContainer">
+            <mat-card *cdkVirtualFor="let email of emails"  [style.background] = "(email == selectedEmail)? '#6f6062' : '' ">
+                <div (click)="selectedEmail = email">
+                    <mat-card-header>
+                        <mat-card-title>{{email.subject}}</mat-card-title>
+                        <mat-card-subtitle>Id: {{email.id}};    Date: {{email.internalDate | date:'yyyy-MM-dd, HH:mm'}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>{{email.snippet}}</p>
+                    </mat-card-content>
+                </div>
+                <mat-card-actions>
+                    <button mat-button color="warn" (click)="deleteSelectedEmail(email)">X</button>
+                </mat-card-actions>
+            </mat-card>
+        </cdk-virtual-scroll-viewport>
+        <div class="listFooter">
+            <button mat-raised-button color="warn" (click)="startupPage = true; selectedEmail = null;">Import</button>
+            <button mat-raised-button color="primary" (click)="exportEmails()">Export</button>
+        </div>
+    </div>
+    <div class="rightSide details" *ngIf = "selectedEmail != null">
+        <h3>{{selectedEmail.subject}}</h3>
+        <div class="detailsList">
+            <h5>Id: </h5> 
+            <p>{{selectedEmail.id}}</p>
+            <h4>Sender: </h4> 
+            <p>{{selectedEmail.sender}}</p>
+            <h4>Target: </h4> 
+            <p>{{selectedEmail.target}}</p>
+            <h4>Date: </h4> 
+            <p>{{selectedEmail.internalDate | date:'yyyy-MM-dd, HH:mm'}}</p>
+            <h4>Snippet: </h4> 
+            <p>{{selectedEmail.snippet}}</p>
+            <h4>Labels: </h4> 
+            <div>
+                <!-- <p *ngFor="let label of selectedEmail.labels">{{label}};</p> -->
+                <p>{{selectedEmail.labels}}</p>
+            </div>
+            <h4>Attachnments: </h4> 
+            <div>
+                <p *ngFor="let attachment of selectedEmail.attachments">{{attachment.name}};</p>
+            </div>
+            
+            
+        </div>
+    </div>
+</section>
+
+<section *ngIf="pageIsLoading" class="loadingElement" >
+    <div class="loadingContent">
+        <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+        <h2>Loading...</h2>
+    </div>
+</section>

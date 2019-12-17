@@ -1,0 +1,73 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-stepper-horizontal{
+    height: 100%;
+}
+
+.mat-horizontal-content-container{
+    height: 87%;
+}
+
+.gridContainer{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: max-content;
+    grid-template-areas: "leftSide rightSide";
+    height: 100%;
+}
+
+.leftSide{
+    grid-area: "leftSide";
+    height: stretch;
+}
+
+.rightSide{
+    grid-area: "rightSide";
+}
+
+
+h2{
+    color: whitesmoke;
+    text-align: center;
+}
+
+.listContainer{
+    background-color: #505050;
+    border-radius: 4px;
+    padding: 5px;
+    height: 86vh;
+}
+
+.scrollContainer{
+    height: 92%;
+}
+
+.listFooter{
+    display: grid;
+    grid-template-rows: max-content;
+    height: auto;
+
+    .mat-raised-button{
+        margin: 5px;
+    }
+}
+
+.loadingElement{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #222222cc;
+    width: 100%;
+    height: 100%;
+}
+
+.loadingContent
+{
+    margin-top: 25%;
+    .mat-progress-spinner{
+        margin: auto;
+    }
+}

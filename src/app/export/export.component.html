@@ -1,0 +1,48 @@
+<section class="gridContainer">
+    <div class="leftSide listContainer">
+        <cdk-virtual-scroll-viewport  itemSize="92" minBufferPx="200" maxBufferPx="1000" class="scrollContainer">
+            <mat-card *cdkVirtualFor="let dat of parsed"  [style.background] = "(dat == selectedData)? '#6f6062' : '' ">
+                <div (click)="selectedData = dat">
+                    <mat-card-header>
+                        <mat-card-title>{{dat.emailID}}</mat-card-title>
+                        <mat-card-subtitle>{{dat.emailSubject}}</mat-card-subtitle>
+                    </mat-card-header>
+                </div>
+                <mat-card-actions>
+                    <button mat-button color="warn" (click)="deleteSelectedData(dat)">X</button>
+                </mat-card-actions>
+            </mat-card>
+        </cdk-virtual-scroll-viewport>
+        <div class="listFooter">
+            <button mat-raised-button color = "warn" (click)="fileInput.click()">
+                <span>Load Parsed Data</span>
+                <input #fileInput type="file" (change)="loadData($event.target.files)" style="display:none;" accept=".json" />
+            </button>
+            <button mat-raised-button color="warn" (click)="parseData()">Parse Data</button>        
+            <button mat-raised-button color="accent" (click)="saveData()">Save .json</button>
+            <button mat-raised-button color="primary" (click)="exportData()">Export .arff</button>
+        </div>
+    </div>
+    <div class="rightSide details" *ngIf = "selectedData != null">
+        <h3>{{selectedData.emailSubject}}</h3>
+        <h5>Id: {{selectedData.emailID}}</h5>
+        <cdk-virtual-scroll-viewport itemSize="30" class="scrollContainer">
+            <div *ngFor="let attrib of selectedData.attributes " class="detailsList">
+                <h5>{{attrib.name}}({{attrib.isNominal? 'Nominal' : 'Numeric'}}):</h5>
+                <p *ngIf="!attrib.isManual">{{attrib.value}}</p>
+                <mat-form-field *ngIf="attrib.isManual">
+                    <input matInput placeholder="Manual Value" [(ngModel)]="attrib.value">
+                </mat-form-field>
+            </div>    
+        </cdk-virtual-scroll-viewport>
+    </div>
+</section>
+
+<section *ngIf="pageIsLoading" class="loadingElement" >
+    <div class="loadingContent">
+        <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+        <h2>Loading...</h2>
+    </div>
+</section>
+
+        
