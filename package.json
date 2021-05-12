@@ -30,7 +30,7 @@
     "fs": "0.0.1-security",
     "gapi": "0.0.3",
     "hammerjs": "^2.0.8",
-    "mathjs": "^6.2.3",
+    "mathjs": "^7.5.1",
     "readline": "^1.3.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
